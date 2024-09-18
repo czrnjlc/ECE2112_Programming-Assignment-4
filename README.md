@@ -1,11 +1,15 @@
 # Programming Assignment 4: Data Wrangling and Data Documentation
-This repository contains Python script for analyzing student performance based on data from an Excel file. The script performs data filtering and generate visualizations using Seaborn and Matplotlib.
+This repository contains Python script for analyzing board takers performance based on data from an Excel file. The script performs data filtering and generate visualizations using Seaborn and Matplotlib.
 
 ### Prerequisites
 Make sure you have the following Python libraries installed:
 * pandas
-* seabon
+* seaborn
 * matplotlib
+
+### Files
+* `board2.xlsx`: Excel file containing ECE Board Exam data
+* `Cueco_PA4.ipynb`: Jupyter Notebook for data analysis and visualization
 
 ### Script Overview
 **1. Data Loading:**
@@ -25,6 +29,7 @@ Instru
 This filters `df` with students in the "Instrumentation" track from "Luzon" with Electronics scores greater than 70 and selects relevant columns.
 
 ```python
+df['Average'] = df[['Math', 'Electronics', 'GEAS', 'Communication']].mean(axis=1)
 Mindy = df[(df["Hometown"] == "Mindanao") & (df["Gender"] == "Female") & (df["Average"] >= 55)][["Name", "Track", "Electronics", 'Average']]
 Mindy
 ```
@@ -70,7 +75,9 @@ The dataset `board2.xlsx` contains student performance data with columns such as
 ```python
 import pandas as pd
 
+# Load the dataset
 df = pd.read_excel('board2.xlsx')
+# Display the dataset
 df
 ```
 * `import pandas as pd`: Imports the pandas library.
@@ -79,7 +86,9 @@ df
 
 **A. Filtering for Instrumentation Track from Luzon**
 ```python
+# Filter where Track is Instrumentation, Hometown is Luzon, and Electronics grade > 70
 Instru = df[(df["Track"] == "Instrumentation") & (df["Hometown"] == "Luzon") & (df["Electronics"] > 70)][["Name", "GEAS", "Electronics"]]
+# Display the filtered DataFrame
 Instru
 ```
 * `df[...]`: Filters the DataFrame based on the conditions specified within the brackets.
@@ -91,10 +100,16 @@ Instru
 
 **B. Filtering Female Students from Mindanao**
 ```python
-Mindy = df[(df["Hometown"] == "Mindanao") & (df["Gender"] == "Female") & (df["Average"] >= 55)][["Name", "Track", "Electronics", 'Average']]
+# Calculate the average grade for each student by taking the mean of the "Math", "Electronics",
+# "GEAS", and "Communication" columns. The mean is calculated along axis=1
+df['Average'] = df[['Math', 'Electronics', 'GEAS', 'Communication']].mean(axis=1)
+# Filter where Hometown is Mindanao, Gender is Female, and Average >= 55
+Mindy = df[(df["Hometown"] == "Mindanao") & (df["Gender"] == "Female") & (df["Average"] >= 55)][["Name", "Track", "Electronics", "Average"]]
+# Display the filtered DataFrame
 Mindy
 ```
 * `df[...]`: Filters the DataFrame based on the specified conditions.
+* `df['Average'] = df[[...]].mean(axis=1)`: This code calculates the average of the 'Math', 'Electronics', 'GEAS', and 'Communication' grades for each student and stores the result in a new column called Average. The mean is computed across the selected columns for each row.
 * `df['Hometown'] == 'Mindanao'`: Checks if the value in the 'Hometown' column is 'Mindanao'.
 * `df['Gender'] == 'Female'`: Checks if the value in the 'Gender' column is 'Female'.
 * `df['Average'] >=  55`: Checks if the value in the 'Average' column is greater than or equal to 55.
@@ -103,10 +118,12 @@ Mindy
 
 **Data Visualization**
 ```python
+#import seaborn and matplotlib.pyplot's library
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-plt.figure(figsize=(10, 5))
+#Set figure size
+plt.figure(figsize=(5, 10))
 ```
 * `import seaborn as sns`: Imports the Seaborn library for the statistical data visualization
 * `import matplotlib.pylplot as plt`: Imports Matplotlib's pyplot module visualizations.
@@ -114,6 +131,7 @@ plt.figure(figsize=(10, 5))
 
 **A. Bar Plot for Track**
 ```python
+# Bar plot for Track
 plt.subplot(3, 1, 1)
 sns.barplot(x='Track', y='Average', data=df)  
 plt.title('Average Grade by Track')
@@ -124,6 +142,7 @@ plt.title('Average Grade by Track')
 
 **B. Bar Plot for Gender**
 ```python
+# Bar plot for Gender
 plt.subplot(3, 1, 2)
 sns.barplot(x='Gender', y='Average', data=df)  
 plt.title('Average Grade by Gender')
@@ -134,6 +153,7 @@ plt.title('Average Grade by Gender')
 
 **Bar Plot for Hometown**
 ```python
+# Bar plot for Hometown
 plt.subplot(3, 1, 3)
 sns.barplot(x='Hometown', y='Average', data=df) 
 plt.title('Average Grade by Hometown')
@@ -143,6 +163,7 @@ plt.title('Average Grade by Hometown')
 * `plt.title('Average Grade by Hometown')`: Sets the title of the plot.
 
 ```python
+#Adjust layout and show the plot
 plt.tight_layout()
 plt.show()
 ```
@@ -157,11 +178,12 @@ This script loads bar takers data, perform various filters to extract specific s
 ### Profile
 **Author:** Czarina Julia C. Cueco
 
-*I am currently an engineering student from University of Santo Tomas, working with data analysis and data visualization using Pandas, Seabon, and Matplotlib in Python. This repository is part of a programming assignment, where I explore how to load and manipulate data, data wrangling, and data visualization.*
+*I am currently an engineering student from University of Santo Tomas, working with data analysis and visualization using Pandas, Seabon, and Matplotlib in Python. This repository is part of a programming assignment, where I explore data wrangling, and data visualization.*
 
 ### Edit History
-| Date           | Description                                           |
-|----------------|-------------------------------------------------------|
-| 2024-09-18     | Initial Creation                                      |
+| Date           | Description                                                               |
+|----------------|---------------------------------------------------------------------------|
+| 2024-09-18     | Initial Creation                                                          |
+| 2024-09-19     | Uploaded .ipynb and .xlsx file and Updated READMe included more info      |
 
   
